@@ -1,0 +1,3 @@
+entrada = input("Escribe algo: ")
+
+print(entrada.isdigit())
