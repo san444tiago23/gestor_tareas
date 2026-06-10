@@ -1,3 +1,5 @@
+# Proyecto gestor de tareas
+
 import json
 def guardar_tareas(lista):
     with open("tareas.json", "w") as archivo:
