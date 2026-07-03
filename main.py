@@ -1,22 +1,7 @@
 # Proyecto gestor de tareas
 
-import json
 from storage import guardar_tareas, cargar_tareas
-def mostrar_tareas(lista):
-        contador = 0
-        for i in lista:
-            contador += 1
-            if i["completada"]:
-                simbolo = "✔"
-            else:
-                simbolo = "❌"
-            print(contador, i["nombre"], simbolo)
-
-def tarea_noregistrada(lista):
-    if not lista:
-            print("No hay tareas registradas")
-            return True
-    return False
+from utils import mostrar_tareas, tarea_noregistrada, pedir_indice
 
 '''def filtrar_tareas(lista, estado):
         lista_filtrada = []
@@ -32,15 +17,6 @@ def filtrar_nombre(lista, nombres):
                 if nombres.lower() in nombre.lower():
                     lista_connombre.append(i)
         return lista_connombre'''
-
-def pedir_indice(mensaje):
-    entrada = input(mensaje)
-    entrada = entrada.strip()
-
-    if not entrada.isdigit():
-        print("Por favor ingresa un número válido")
-        return None
-    return int(entrada)
 
 def filtrar(lista, condicion):
     lista_filtrada = []
@@ -59,8 +35,6 @@ def negar(c):
     return lambda t: not c(t)
 
 nueva_tarea = cargar_tareas()
-print(cargar_tareas())
-
 while True:
     print("Gestor de tareas")
     print("1. Agrerar tarea")
@@ -183,7 +157,7 @@ while True:
                 continue
             else:
                 mostrar_tareas(resultado)
-                indice = pedir_indice = (input("Que tarea deseas editar? "))
+                indice = pedir_indice("Que tarea deseas editar? ")
                 if indice < 1 or indice > len(resultado):
                     print("Índice fuera de rango")
                     continue
@@ -229,8 +203,3 @@ while True:
                         print("Tarea actualizada correctamente")
                     mostrar_tareas(resultado)
                     # Primera modificación después del commit
-                        
-
-                        
-
-        
