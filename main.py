@@ -1,7 +1,8 @@
 # Proyecto gestor de tareas
 
 from storage import guardar_tareas, cargar_tareas
-from utils import mostrar_tareas, tarea_noregistrada, pedir_indice
+from tasks import mostrar_tareas, tarea_noregistrada, pedir_indice, agregar_tarea, editar_tarea, eliminar_tarea, marcar_tarea_completada, ver_pendientes, ver_completadas
+from filters import filtrar, combinar_and, combinar_or, negar
 
 '''def filtrar_tareas(lista, estado):
         lista_filtrada = []
@@ -18,21 +19,7 @@ def filtrar_nombre(lista, nombres):
                     lista_connombre.append(i)
         return lista_connombre'''
 
-def filtrar(lista, condicion):
-    lista_filtrada = []
-    for i in lista:
-        if condicion(i):
-            lista_filtrada.append(i)
-    return lista_filtrada
 
-def combinar_and(c1, c2):
-    return lambda t: c1(t) and c2(t)
-
-def combinar_or(c1, c2):
-    return lambda t: c1(t) or c2(t)
-
-def negar(c):
-    return lambda t: not c(t)
 
 nueva_tarea = cargar_tareas()
 while True:
@@ -54,7 +41,7 @@ while True:
         print(f"Has seleccionado la tarea: {tarea}")
 
 
-    if tarea == "1": 
+    '''if tarea == "1": 
         tarea_agregada = input("¿Qué tarea quieres agregar? ")
         nueva_tarea.append({
         "nombre": tarea_agregada,
@@ -62,10 +49,10 @@ while True:
         })
         guardar_tareas(nueva_tarea)
         print(f"Tarea '{tarea_agregada}' agregada exitosamente.")
-        print("Ahora tienes" , len(nueva_tarea) , "tareas agregadas")
+        print("Ahora tienes" , len(nueva_tarea) , "tareas agregadas")'''
+    if tarea == "1":
+        agregar_tarea(nueva_tarea)
     elif tarea == "2":
-        if tarea_noregistrada(nueva_tarea):
-            continue
         mostrar_tareas(nueva_tarea)
     elif tarea == "3":
         if tarea_noregistrada(nueva_tarea):
