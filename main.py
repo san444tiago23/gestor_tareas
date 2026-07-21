@@ -1,7 +1,7 @@
 # Proyecto gestor de tareas
 
 from storage import guardar_tareas, cargar_tareas
-from tasks import mostrar_tareas, tarea_noregistrada, pedir_indice, agregar_tarea, editar_tarea, eliminar_tarea, marcar_tarea_completada, ver_pendientes, ver_completadas
+from tasks import mostrar_tareas, tarea_noregistrada, pedir_indice, agregar_tarea, eliminar_tarea, marcar_tarea_completada, ver_tareas_por_estado, ver_tarea_por_nombre, editar_tarea
 from filters import filtrar, combinar_and, combinar_or, negar
 
 '''def filtrar_tareas(lista, estado):
@@ -40,77 +40,32 @@ while True:
     else:
         print(f"Has seleccionado la tarea: {tarea}")
 
-
-    '''if tarea == "1": 
-        tarea_agregada = input("¿Qué tarea quieres agregar? ")
-        nueva_tarea.append({
-        "nombre": tarea_agregada,
-        "completada": False
-        })
-        guardar_tareas(nueva_tarea)
-        print(f"Tarea '{tarea_agregada}' agregada exitosamente.")
-        print("Ahora tienes" , len(nueva_tarea) , "tareas agregadas")'''
     if tarea == "1":
         agregar_tarea(nueva_tarea)
     elif tarea == "2":
+        if tarea_noregistrada(nueva_tarea):
+            continue
         mostrar_tareas(nueva_tarea)
     elif tarea == "3":
-        if tarea_noregistrada(nueva_tarea):
-            continue
-        mostrar_tareas(nueva_tarea)
-        indice = pedir_indice("¿Qué tarea completaste? ")
-        if indice is None:
-            continue
-        numero_indice = indice - 1
-        if indice < 1 or indice > len(nueva_tarea): #valida que el indice este dentro del rango de la lista de tareas
-            print("Esa tarea no esta agregada")
-        else:
-            if nueva_tarea[numero_indice]["completada"]: # valida que la tarea ya este completada
-                print("Esta tarea ya esta completa")
-            else:
-                tarea_completada = nueva_tarea[numero_indice]["nombre"]
-                nueva_tarea[numero_indice]["completada"] = True
-                guardar_tareas(nueva_tarea) 
-                print(f"Tarea" , tarea_completada  ,"completada")
-                mostrar_tareas(nueva_tarea)
+        marcar_tarea_completada(nueva_tarea)
     elif tarea == "4":
-        if tarea_noregistrada(nueva_tarea):
-            continue
-        mostrar_tareas(nueva_tarea)
-        entrada = (input("Que tarea deseas eliminar? "))
-        entrada = entrada.strip()
-        if not entrada.isdigit():
-            print(f"Por favor ingresa un número válido")
-        else:
-            indice = int(entrada)
-            if indice < 1 or indice > len(nueva_tarea):
-                print("Esa tarea no se puede eliminar")
-            else:
-                numero_indice = indice - 1
-                nueva_tarea.pop(numero_indice)
-                guardar_tareas(nueva_tarea)
-                print(f"Tarea" , (numero_indice + 1),"eliminada")
-                mostrar_tareas(nueva_tarea)    
+        eliminar_tarea(nueva_tarea)  
     elif tarea == "5":
-        if tarea_noregistrada(nueva_tarea):
-            continue
-            #lista_filtrada_pendientes = filtrar_tareas(nueva_tarea, False)
-        lista_filtrada_pendientes = filtrar(nueva_tarea, lambda t: t["completada"] == False)
-        if not lista_filtrada_pendientes:
-            print("No quedan tareas pendientes por realizar")
+        resultado = ver_tareas_por_estado(nueva_tarea, False)
+        if not resultado:
+            print("No quedan tareas pendientes")
         else:
-            mostrar_tareas(lista_filtrada_pendientes)
+            mostrar_tareas(resultado)
     elif tarea == "6":
-        if tarea_noregistrada(nueva_tarea):
-            continue
-            #lista_filtrada = filtrar_tareas(nueva_tarea, True)
-        lista_filtrada = filtrar(nueva_tarea, lambda t: t["completada"] == True)
-        if not lista_filtrada:
-            print("No hay tareas completadas")
+        
+        resultado = ver_tareas_por_estado(nueva_tarea, True)
+        if not resultado:
+            print("No quedan tareas completadas")
         else:
-            mostrar_tareas(lista_filtrada)
+            mostrar_tareas(resultado)
     elif tarea == "7":
-        if tarea_noregistrada(nueva_tarea):
+        ver_tarea_por_nombre(nueva_tarea)
+        '''if tarea_noregistrada(nueva_tarea):
             continue
         nombre_filtrado = input("¿Que tarea deseas filtrar? ")
         nombre_filtrado = nombre_filtrado.strip()
@@ -126,9 +81,10 @@ while True:
             if not resultado:
                 print("Esa tarea no esta en nuestra lista")
             else:
-                mostrar_tareas(resultado)
+                mostrar_tareas(resultado)'''
     elif tarea == "8":
-        if tarea_noregistrada(nueva_tarea):
+        editar_tarea(nueva_tarea)
+        '''if tarea_noregistrada(nueva_tarea):
             continue
         nombre_filtrado = input("¿Que tarea deseas filtrar? ")
         nombre_filtrado = nombre_filtrado.strip()
@@ -188,5 +144,5 @@ while True:
                     if se_edito:
                         guardar_tareas(nueva_tarea)
                         print("Tarea actualizada correctamente")
-                    mostrar_tareas(resultado)
+                    mostrar_tareas(resultado)'''
                     # Primera modificación después del commit
